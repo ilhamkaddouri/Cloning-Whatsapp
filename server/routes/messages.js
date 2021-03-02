@@ -11,7 +11,7 @@ router.get('/',(req,res)=>{
     })
 })
 
-router.post('/add',(req,res)=>{
+router.post('/',(req,res)=>{
 
         const dbMessage = req.body;
         Message.create(dbMessage, (err,data)=>{

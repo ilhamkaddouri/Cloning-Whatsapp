@@ -18,6 +18,8 @@ const pusher = new Pusher({
 
 //routes
 const messageRoute = require('./routes/messages')
+const roomRoute = require('./routes/rooms')
+
 
 //DB config
 const DB_URL = 'mongodb+srv://ilham:adminmongo@cluster0.2slfn.mongodb.net/whatsapDB?retryWrites=true&w=majority'
@@ -53,6 +55,8 @@ db.once("open",()=>{
 app.use(express.json())
 app.use(cors())
 app.use('/api/messages',messageRoute)
+app.use('/api/rooms',roomRoute)
+
 
 app.listen(PORT, ()=>{
     console.log(`we are listeing to the port ${PORT} yeeey`)

@@ -1,15 +1,19 @@
 import React from 'react'
 import './sidebarChat.css'
-import {Avatar, IconButton} from '@material-ui/core'
-function SideBarChat() {
+import {Avatar} from '@material-ui/core'
+import {Link} from 'react-router-dom'
+function SideBarChat({room}) {
     return (
-        <div className='sidebarChat'>
-            <Avatar/>
-            <div className='sidebarChat__infos'>
-                <h2>Room name</h2>
-                <p>Ths is the last message</p>
+        <Link className='link' to={`/rooms/${room._id}`}>
+            <div className='sidebarChat'>
+                <Avatar src={room.img}/>
+                <div className='sidebarChat__infos'>
+                    <h2>{room.name}</h2>
+                    <p>last message</p>
+                </div>
             </div>
-        </div>
+        </Link>
+       
     )
 }
 
