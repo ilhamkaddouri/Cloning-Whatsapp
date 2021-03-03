@@ -20,9 +20,9 @@ function Chat() {
     const [roomImg,setRoomImg]= useState()
     const [chosenEmoji, setChosenEmoji] = useState(null);
 
-    const onEmojiClick = (event, emojiObject) => {
-        setChosenEmoji(emojiObject);
-    };
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
 
     const sendMessage =async (e)=>{
         e.preventDefault()

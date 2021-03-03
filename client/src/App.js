@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      {user ? (<Login/>)
+      {!user ? (<Login/>)
       :
       <div className="app__body">
         <Router>
