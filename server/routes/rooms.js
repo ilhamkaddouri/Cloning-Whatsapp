@@ -31,4 +31,20 @@ router.get('/:id',(req,res)=>{
         }
     })
 })
+
+router.post('/:id/messages',(req,res)=>{
+   
+    Room.findById(req.params.id,(err,room)=>{
+        if(err){
+            res.status(500).send(err)
+        }else{
+            const mesage = req.body
+            console.log(room.messages)
+            room.messages.push(mesage);
+            room.save()
+            res.send(room)
+        }
+    })
+})
+
 module.exports = router

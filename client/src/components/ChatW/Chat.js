@@ -8,15 +8,25 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import axios from '../../axios'
+import Pusher from 'pusher-js'
 import {useParams} from 'react-router-dom'
-function Chat({messages}) {
+import Picker from 'emoji-picker-react';
+function Chat() {
+    const [messages,setMessages]= useState([])
     const [input,setInput]= useState()
     const {roomId} =useParams()
     const [roomName,setRoomName]= useState()
+    const [timseStamp,setTimeStamp]= useState()
     const [roomImg,setRoomImg]= useState()
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+    };
+
     const sendMessage =async (e)=>{
         e.preventDefault()
-        await axios.post('/messages',{
+        await axios.post(`/rooms/${roomId}/messages`,{
             message : input,
             name:"user",
             timestamp : new Date().toUTCString(),
@@ -26,26 +36,48 @@ function Chat({messages}) {
     }
 
     useEffect(()=>{
+        const pusher = new Pusher('97afa67d358853afcd93', {
+        cluster: 'eu'
+        });
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('inserted', function(data) {
+        
+        setMessages([...messages, data])
+       
+    });
+
+    return ()=>{
+        channel.unbind_all()
+        channel.unsubscribe();
+    }
+    },[messages])
+    
+    useEffect(()=>{
         if(roomId){
             axios.get(`/rooms/${roomId}`).then(res=>{
-                console.log(res.data)
                 setRoomName(res.data.name);
                 setRoomImg(res.data.img)
+                
+                setMessages(res.data.messages)
             }).catch(err=> console.log(err))
         }
-      
+        if(messages.length>0){
+            setTimeStamp(messages.slice(-1)[0].timestamp)
+        }
+       
     },[roomId])
-
+    
     return (
         <div className='chat'>
            <div className='chat__header'>
                 <Avatar src={roomImg}/>
                 <div className="chat__headerInfo">
                         <h3>{roomName}</h3>
-                        <p>lat seen on..</p>
+                        <p>lat seen on {messages.length>0 && <span className="chat__lastseen">{timseStamp}</span>}</p>
                 </div>
                 <div className="chat__headerRight">
-                    <IconButton>
+                    <IconButton >
                         <SearchOutlinedIcon />
                     </IconButton>
                     <IconButton>
@@ -57,8 +89,8 @@ function Chat({messages}) {
                 </div>
            </div>
            <div className="chat__body">
-               {messages.map((key,message)=>(
-                     <p id={key} className={`chat__message ${message.received && "chat__receiver"} `}>
+               {messages.map((message,key)=>(
+                     <p className={`chat__message ${message.received && "chat__receiver"} `}>
                      <span className="chat__name">{message.name}</span>
                      {message.message}
                      <span className='chat__timestamp'>{message.timestamp}</span>
@@ -69,12 +101,16 @@ function Chat({messages}) {
                 
            </div>
            <div className="chat__footer">
-                <InsertEmoticonIcon/>
+               <IconButton>
+                    <InsertEmoticonIcon/>
+               </IconButton>
                 <form>
                     <input value={input} onChange={(event)=> setInput(event.target.value)} placeholder="type a message" type="text"/>
                     <button onClick={sendMessage} type="submit">send a message</button>
                 </form>
-                <MicIcon/>
+                <IconButton>
+                    <MicIcon/>
+                </IconButton>
            </div>
         </div>
     )

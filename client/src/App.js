@@ -8,32 +8,8 @@ import Pusher from 'pusher-js'
 import axios from './axios'
 import Login from "./components/Authentication/Login";
 function App() {
-  const [messages,setMessages]= useState([])
   const [user,setUser]= useState(null)
-  
-  useEffect(()=>{
-    axios.get('/messages').then(res=> {console.log(res.data);
-      setMessages(res.data)
-    } ).catch(err=> console.log(err))
-  },[])
 
-  useEffect(()=>{
-    const pusher = new Pusher('97afa67d358853afcd93', {
-      cluster: 'eu'
-    });
-
-    const channel = pusher.subscribe('messages');
-    channel.bind('inserted', function(data) {
-     
-      setMessages([...messages, data])
-      console.log(messages)
-    });
-
-   return ()=>{
-      channel.unbind_all()
-      channel.unsubscribe();
-    }
-  },[messages])
   return (
     <div className="App">
       {user ? (<Login/>)
@@ -45,7 +21,7 @@ function App() {
          
             <Route path='/rooms/:roomId'>
               
-              <Chat messages={messages}/>
+              <Chat />
             </Route>
             <Route path='/'>
               

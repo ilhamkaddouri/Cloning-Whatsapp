@@ -23,7 +23,7 @@
     margin-bottom: 5px
 }
 .chat__headerInfo > p{
-
+        font-size: 12px;
         color: gray;
 }
 .chat__headerRight{
@@ -31,7 +31,10 @@
     justify-content: space-between;
     margin-right: 10px;
 }
-
+.chat__lastseen{
+    color: black;
+    font-size: xx-small;
+}
 .chat__body{
     flex: 1;
     background-image: url('https://i2.wp.com/www.techgrapple.com/wp-content/uploads/2016/07/WhatsApp-Chat-theme-iPhone-stock-744.jpg');

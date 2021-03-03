@@ -14,11 +14,28 @@
     background-color: #ebebeb
 }
 
-.sidebarChat__infos > h2{
-   font-size: 16px;
-   margin-bottom: 8px;
-
+.sidebarChat__roomInfos {
+    display: flex;
+    align-items: center;
+    
 }
+.sidebarChat__roomInfos > h2{
+    font-size: 16px;
+    position: relative;
+     margin-bottom: 4px;
+  
+  }
+.sidebarChat__roomInfos > p{
+    flex: 1;
+    font-size: 8px;
+    text-align: right;
+    margin-right: 0;
+  }
+
+
 .sidebarChat__infos{
     margin-left: 15px;
+}
+.sidebarChat__infos >p{
+    font-size: 14px;
 }
