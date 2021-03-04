@@ -2,9 +2,10 @@ const {OAuth2Client, UserRefreshClient} = require('google-auth-library')
 const client = new OAuth2Client("1080247718906-i35pll533d3drvhk0s2vpqjghs4217qt.apps.googleusercontent.com")
 const User = require('../models/User')
 const jwt= require('jsonwebtoken')
-const googlelogin=(req,res)=>{
+const ash = require('express-async-handler')
+const googlelogin= ash(async (req,res)=>{
     const {tokendId} = req.body;
-    client.verifyIdToken({idToken:tokendId, audience: "1080247718906-i35pll533d3drvhk0s2vpqjghs4217qt.apps.googleusercontent.com"}).then(response=>{
+    await client.verifyIdToken({idToken:tokendId, audience: "1080247718906-i35pll533d3drvhk0s2vpqjghs4217qt.apps.googleusercontent.com"}).then(response=>{
         const {email_verified, name,email}= response.getPayload()
         console.log(response.getPayload())
         if(email_verified){
@@ -16,6 +17,7 @@ const googlelogin=(req,res)=>{
                 }else{
                     if(user){
                         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET_KEY)
+                        //res.header("auth-token-google",token).send(token)
                         const {_id,name,email}= user;
                         res.json({
                             token,
@@ -46,7 +48,7 @@ const googlelogin=(req,res)=>{
             })
         }
     })
-    console.log('errir')
-}
+   
+})
 
 module.exports = googlelogin

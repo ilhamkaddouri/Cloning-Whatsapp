@@ -24,8 +24,13 @@ const roomRoute = require('./routes/rooms')
 
 
 //DB config
-const DB_URL = 'mongodb+srv://ilham:adminmongo@cluster0.2slfn.mongodb.net/whatsapDB?retryWrites=true&w=majority'
-mongoose.connect(DB_URL,{
+const DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+  );
+  
+//const DB_URL = 'mongodb+srv://ilham:adminmongo@cluster0.2slfn.mongodb.net/whatsapDB?retryWrites=true&w=majority'
+mongoose.connect(DB,{
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true
