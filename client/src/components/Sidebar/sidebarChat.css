@@ -39,3 +39,10 @@
 .sidebarChat__infos >p{
     font-size: 14px;
 }
+.modal__form{
+    
+    width: 100%;
+    display: grid;
+    align-items: center;
+    background-color: blanchedalmond;
+}

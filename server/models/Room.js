@@ -12,7 +12,10 @@ const RoomSchema = new mongoose.Schema({
                 received: Boolean
         
         }
-    ]
+    ],
+    date:{
+        type: Date
+    }
 })
 
 module.exports = mongoose.model('room',RoomSchema)

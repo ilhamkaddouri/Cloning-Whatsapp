@@ -1,9 +1,11 @@
-const router = require('express').Router()
+const router = require('express').Router({ mergeParams: true })
 const Message = require('../models/deMessages')
 const Room = require('../models/Room')
-
+const auth = require('../controller/auth')
 //asycn handler to handle async await errors
 const ash = require('express-async-handler')
+
+// //router.use(auth.protect)
 router.get('/',ash(async (req,res)=>{
    await Message.find((err,data)=>{
         if(err){

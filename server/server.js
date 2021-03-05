@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Pusher = require('pusher')
 const cors = require('cors')
+const fileupload = require('express-fileupload')
 require('dotenv').config()
 //Config app
 const app = express()
@@ -61,10 +62,14 @@ db.once("open",()=>{
 //middleware
 app.use(express.json())
 app.use(cors())
+app.use(fileupload({
+    createParentPath: true
+}))
+app.use(express.urlencoded({extended:true}))
 app.use('/api/auth',authRoute)
 app.use('/api/messages',messageRoute)
 app.use('/api/rooms',roomRoute)
-
+app.use(express.static(__dirname+'/Images'))
 
 app.listen(PORT, ()=>{
     console.log(`we are listeing to the port ${PORT} yeeey`)
