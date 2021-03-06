@@ -39,8 +39,8 @@ function SideBar() {
     const [rooms,setRooms]= useState([])
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-    const [name,setName] = useState("")
-    const [image,setImage] = useState()
+    const [name,setName] = useState(" ")
+    const [image,setImage] = useState(null)
     const classes = useStyles();
     const handleOpen = () => {
         setOpen(true);
@@ -61,7 +61,8 @@ function SideBar() {
         }
     },[])
 
-    const createChat = ()=>{
+    const createChat = (e)=>{
+        e.preventDefault()
         const user = 'user'
         const data = new FormData()
         data.append("name", name)
@@ -69,10 +70,15 @@ function SideBar() {
         data.append('img', image.name)
         try{
             const room ={name,image}
-            console.log(image)
+            console.log("image url is" +image.name)
+            console.log("name is " +name)
             // if(name){
             //     const room= {name}
-                axios.post('/rooms',data).then(res=> console.log(res.data)).catch(err=> console.log(err))
+                axios.post('/rooms',data,{
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }).then(res=> console.log(res.data)).catch(err=> console.log(err))
              
         }catch(err){
             console.log(err)

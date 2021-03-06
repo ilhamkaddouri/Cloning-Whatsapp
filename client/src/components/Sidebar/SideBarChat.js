@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 function SideBarChat({room}) {
     const img = '../../../../server/Images/'+room.date+room.img
-    console.log(img)
+   
     console.log(room.messages)
     return (
         <Link className='link' to={`/rooms/${room._id}`}>

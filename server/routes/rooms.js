@@ -45,7 +45,7 @@ router.post('/',upload.single('image'),async (req,res)=>{
         img: req.body.img,
         date :  Date.now()
     }
-    console.log(room)
+    console.log(req.file)
     await Room.create(room,(err,data)=>{
         if(err){
             res.status(500).send(err)
