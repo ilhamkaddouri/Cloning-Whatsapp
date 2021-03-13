@@ -17,14 +17,28 @@ const storage= multer.diskStorage({
         cb(null, Date.now()+file.originalname)
     }
 })
+
+const upl = multer({dest :'uploads/'})
 const upload = multer({storage: storage, 
     
     limits:{
     fileSize : 1024*1024*5
 }})
 
-router.post('/upload',upload.single('image'),(req,res)=>{
-    res.send('image uploaded')
+var upld = multer({ dest: './public' })
+router.post('/stats', upld.single('img'), (req,res)=>{
+    try{
+        console.log("Uploaded Successfull with filename : "+req.message);
+        res.send("did it")
+    }catch(err){
+        res.send('err'+err)
+    }
+    
+    });
+
+router.post('/upload',upl.single('image'),(req,res)=>{
+    //console.log("files is " + req.body.file)
+    res.send('image uploaded'+req.file)
 })
 
 router.get('/',(req,res)=>{
@@ -41,11 +55,11 @@ router.post('/',upload.single('image'),async (req,res)=>{
     
     
     const room ={
-        name: req.body.name,
-        img: req.body.img,
+        name: 'user',
+        img: req.file,
         date :  Date.now()
     }
-    console.log(req.file)
+    console.log(room)
     await Room.create(room,(err,data)=>{
         if(err){
             res.status(500).send(err)

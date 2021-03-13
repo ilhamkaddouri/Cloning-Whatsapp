@@ -69,7 +69,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/api/auth',authRoute)
 app.use('/api/messages',messageRoute)
 app.use('/api/rooms',roomRoute)
-app.use(express.static(__dirname+'/Images'))
+
 
 app.listen(PORT, ()=>{
     console.log(`we are listeing to the port ${PORT} yeeey`)

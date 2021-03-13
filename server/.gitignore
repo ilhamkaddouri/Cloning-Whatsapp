@@ -5,3 +5,5 @@
 .pk
 .pem
 .pub
+
+/.env

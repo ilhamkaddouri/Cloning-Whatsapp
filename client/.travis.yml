@@ -1,0 +1,20 @@
+language : node_js
+node_js : 
+  -15.15.0
+cache: npm
+
+before_install:
+install:
+  - npm ci
+
+before_script:
+
+# //all build process
+script:
+  -npm test
+after_success:
+after_failure:
+after_script:
+before_deploy:
+deploy:
+after_deploy:
