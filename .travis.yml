@@ -11,8 +11,7 @@ before_script:
 
 # //all build process
 script:
-  - yarn test
-  - yarn run build
+  
 after_success:
 after_failure:
 after_script:
