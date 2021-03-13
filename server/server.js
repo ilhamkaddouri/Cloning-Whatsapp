@@ -26,7 +26,7 @@ const roomRoute = require('./routes/rooms')
 
 //DB config
 const DB = process.env.DATABASE.replace(
-    '<PASSWORD>',
+    '<password>',
     process.env.DATABASE_PASSWORD
   );
   
