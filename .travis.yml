@@ -1,18 +1,18 @@
 language : node_js
 node_js : 
-  -15.15.0
-cache: npm
+  -14.15.0
+cache: yarn
 
 before_install:
 install:
-  - npm ci
+  - yarn install
 
 before_script:
 
 # //all build process
 script:
-  - npm test
-  - npm run build
+  - yarn test
+  - yarn run build
 after_success:
 after_failure:
 after_script:
