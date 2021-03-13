@@ -20,7 +20,7 @@ before_deploy:
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: $whatsap-mern-login
+  github-token: $github
   on:
     branch: dev
 after_deploy:
